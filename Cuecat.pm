@@ -4,11 +4,11 @@ require 5.005_62;
 use strict;
 use warnings;
 
-our $VERSION = '1.10';
+our $VERSION = '1.20';
 
 sub new {
     my $type = shift;
-    my $class = ref($type) || $type || "NetAddr::IP";
+    my $class = ref($type) || $type || "Barcode::Cuecat";
     my $string = shift;
     
     my $self = bless [], $class;
@@ -23,8 +23,7 @@ sub _decode {
     
     $input =~ tr/a-zA-Z0-9+-/ -_/; 
 
-    $input = unpack 'u', chr(32 + length()*3/4) . $input; 
-    $input =~ s/\0+$//; 
+    $input = unpack 'u', chr(32 + length($input)*3/4) . $input; 
     $input ^= "C" x length($input); 
 
     return $input;
@@ -144,7 +143,9 @@ None by default.
 
 =head1 AUTHOR
 
-Luis E. Munoz <lem@cantv.net>
+Luis E. Munoz <lem@cantv.net>. Thanks to Larry Wall <larry@wall.org>
+for the compact original code. Thanks to Brian Blakley
+<bblakley@mp5.net> for feedback.
 
 =head1 SEE ALSO
 
